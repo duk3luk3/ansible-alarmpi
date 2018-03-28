@@ -1,0 +1,6 @@
+- name: Create user and upload SSH Pubkey
+  import_tasks: tunnel_host.yml
+  tags:
+    - ansible_alarmpi
+    - alarm_task_tunnel
+    - alarm_task_tunnel_host

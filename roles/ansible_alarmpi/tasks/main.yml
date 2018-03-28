@@ -1,0 +1,6 @@
+- name: user setup
+  import_tasks: user.yml
+  tags:
+    - ansible_alarm
+    - alarm_task_user
+

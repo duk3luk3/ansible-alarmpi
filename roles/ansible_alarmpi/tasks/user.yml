@@ -1,0 +1,40 @@
+- name: "Install sudo"
+  package:
+    name: sudo
+    state: latest
+
+- name: "Ensure wheel group"
+  group:
+    name: wheel
+    state: present
+
+- name: "Allow 'wheel' group to have passwordless sudo"
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: "Create user account"
+  user:
+    name: "{{alarm_user_name}}"
+    comment: "{{alarm_user_comment}}"
+    groups: wheel
+
+- name: "Upload ssh key"
+  authorized_key:
+    user: "{{alarm_user_name}}"
+    state: present
+    key: "{{ alarm_user_key }}"
+
+- name: "Disable alarm user"
+  # Equivalent to chage -E 1 alarm
+  # Revert (to never expire) with chage -E -1 alarm
+  user:
+    name: alarm
+    expires: 1
+  tags:
+    - current
+  when:
+    - alarm_disable_alarm_user

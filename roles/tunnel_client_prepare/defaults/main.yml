@@ -1,0 +1,3 @@
+alarm_tunnel_user: pitunnel
+alarm_tunnel_host: example.com
+alarm_tunnel_port: 19999

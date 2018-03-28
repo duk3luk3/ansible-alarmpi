@@ -1,0 +1,15 @@
+[Unit]
+Description=SSH Reverse tunnel
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=60
+ExecStart=/bin/bash -c /home/%i/ssh_tunnel.sh
+User=%i
+Group=systemd-journal
+Environment=ADDR={{alarm_tunnel_host}}
+Environment=PORT={{alarm_tunnel_port}}
+
+[Install]
+WantedBy=network.target

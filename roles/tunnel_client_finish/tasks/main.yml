@@ -1,0 +1,8 @@
+# Start service (needs to happen after pubkey is on tunnel host)
+- name: Loading and starting service
+  become_user: root
+  systemd:
+    daemon_reload: yes
+    name: ssh_tunnel@{{ alarm_tunnel_user }}.service
+    enabled: yes
+    state: restarted

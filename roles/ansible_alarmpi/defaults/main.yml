@@ -1,0 +1,9 @@
+alarm_user_name: luke
+alarm_user_comment: ""
+alarm_user_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+# Disable the default "alarm" user account
+alarm_disable_alarm_user: yes
+
+alarm_tunnel_user: pitunnel
+alarm_tunnel_host: example.com
+alarm_tunnel_port: 19999

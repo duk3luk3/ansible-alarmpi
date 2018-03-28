@@ -1,0 +1,14 @@
+- name: Creating user {{ tunnel_user }}
+  user:
+    name: '{{ tunnel_user }}'
+    system: yes
+
+- name: Adding public ssh keys
+  become_user: '{{ tunnel_user }}'
+  authorized_key:
+    user: '{{ tunnel_user }}'
+    key: "{{ lookup('file', item.src) }}"
+  with_filetree:
+    - ./pubkeys_tmp/
+  when: item.state == 'file' and item.path[-4:] == '.pub'
+

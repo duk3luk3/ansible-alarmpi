@@ -1,0 +1,6 @@
+- name: Tunnel preparation
+  import_tasks: tunnel_prepare.yml
+  tags:
+    - ansible_alarmpi
+    - alarm_task_tunnel
+    - alarm_task_tunnel_prepare

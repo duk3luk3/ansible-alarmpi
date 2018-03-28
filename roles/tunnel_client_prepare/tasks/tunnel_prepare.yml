@@ -1,0 +1,28 @@
+- name: Creating user and ssh key
+  become_user: root
+  user:
+    name: '{{ alarm_tunnel_user }}'
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+    system: yes
+  register: user_ssh
+
+- name: Fetching public key
+  fetch:
+    # user_ssh from above
+    src: '{{ user_ssh["ssh_key_file"] }}.pub'
+    dest: './pubkeys_tmp/{{ inventory_hostname }}_id_rsa.pub'
+    flat: yes
+
+- name: Copying service file
+  template:
+    src: 'ssh_tunnel.service.j2'
+    dest: /etc/systemd/system/ssh_tunnel@.service
+
+- name: Copying ssh_tunnel.sh script
+  template:
+    src: 'ssh_tunnel.sh.j2'
+    dest: /home/pitunnel/ssh_tunnel.sh
+    owner: '{{ alarm_tunnel_user }}'
+    mode: 0700

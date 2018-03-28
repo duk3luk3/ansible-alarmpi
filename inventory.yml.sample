@@ -1,0 +1,18 @@
+all:
+  hosts:
+  children:
+    rpis:
+      hosts:
+        phobos:
+          ansible_host: 192.168.0.51
+          ansible_user: root
+          alarm_username: doomguy
+          alarm_usercomment: doomguy
+          alarm_tunnel_user: pitunnel
+          alarm_tunnel_host: mars
+          alarm_tunnel_port: 19999
+    tunnel_hosts:
+      hosts:
+        mars:
+          ansible_host: mars
+          ansible_user: root
