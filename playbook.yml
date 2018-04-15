@@ -1,0 +1,16 @@
+- hosts: rpis
+  roles:
+    - role: ansible_alarmpi
+
+- hosts: rpis
+  roles:
+    - role: tunnel_client_prepare
+
+- hosts: tunnel_hosts
+  roles:
+    - role: tunnel_host
+
+- hosts: rpis
+  roles:
+    - role: tunnel_client_finish
+
